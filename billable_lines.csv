@@ -1,0 +1,54 @@
+Expense/Bill,Payee/Vendor,Customer,Amount,Date,BillableStatus
+Expense,Info Not Available,Info Not Available,34.0,2025-01-01,NotBillable
+Expense,Hicks Hardware,Info Not Available,42.4,2024-12-13,NotBillable
+Expense,Squeaky Kleen Car Wash,Info Not Available,19.99,2024-12-19,NotBillable
+Expense,Squeaky Kleen Car Wash,Info Not Available,19.99,2024-12-12,NotBillable
+Expense,Bob's Burger Joint,Info Not Available,18.97,2024-12-12,NotBillable
+Expense,Info Not Available,Info Not Available,900.0,2024-12-21,NotBillable
+Expense,Squeaky Kleen Car Wash,Info Not Available,19.99,2024-12-05,NotBillable
+Expense,Bob's Burger Joint,Info Not Available,3.86,2024-12-03,NotBillable
+Expense,Squeaky Kleen Car Wash,Info Not Available,19.99,2024-11-28,NotBillable
+Expense,Bob's Burger Joint,Info Not Available,5.66,2024-11-28,NotBillable
+Expense,Tania's Nursery,Info Not Available,23.5,2024-12-10,NotBillable
+Expense,Chin's Gas and Oil,Info Not Available,185.0,2024-11-29,NotBillable
+Expense,Chin's Gas and Oil,Info Not Available,52.14,2024-11-29,NotBillable
+Expense,Chin's Gas and Oil,Info Not Available,63.15,2024-12-06,NotBillable
+Expense,Pam Seitz,Info Not Available,75.0,2024-12-07,NotBillable
+Expense,Chin's Gas and Oil,Info Not Available,52.56,2024-12-07,NotBillable
+Expense,Hicks Hardware,Info Not Available,125.0,2024-12-07,NotBillable
+Expense,Hicks Hardware,Info Not Available,11.25,2024-12-07,NotBillable
+Expense,Hicks Hardware,Info Not Available,62.5,2024-12-07,NotBillable
+Expense,Hicks Hardware,Info Not Available,30.0,2024-12-07,NotBillable
+Expense,Books by Bessie,Info Not Available,55.0,2024-10-27,NotBillable
+Expense,Robertson & Associates,Info Not Available,250.0,2024-09-26,NotBillable
+Expense,Tania's Nursery,Info Not Available,54.92,2024-11-27,NotBillable
+Expense,Tania's Nursery,Info Not Available,108.09,2024-11-03,NotBillable
+Expense,Tania's Nursery,Info Not Available,46.98,2024-12-06,NotBillable
+Expense,Tania's Nursery,Info Not Available,89.09,2024-10-27,NotBillable
+Expense,Tania's Nursery,Info Not Available,158.08,2024-10-03,NotBillable
+Expense,Tania's Nursery,Info Not Available,82.45,2024-12-01,NotBillable
+Expense,Tony Rondonuwu,Info Not Available,100.0,2024-11-28,NotBillable
+Expense,Hicks Hardware,Info Not Available,215.66,2024-12-01,NotBillable
+Expense,Hicks Hardware,Red Rock Diner,88.09,2024-11-25,NotBillable
+Expense,Hicks Hardware,Info Not Available,24.36,2024-11-19,NotBillable
+Expense,Chin's Gas and Oil,Info Not Available,65.0,2024-11-22,NotBillable
+Expense,Chin's Gas and Oil,Info Not Available,62.01,2024-11-02,NotBillable
+Expense,Chin's Gas and Oil,Info Not Available,54.55,2024-10-18,NotBillable
+Expense,Lee Advertising,Info Not Available,74.86,2024-12-05,NotBillable
+Expense,Ellis Equipment Rental,Info Not Available,112.0,2024-12-05,NotBillable
+Expense,Mahoney Mugs,Info Not Available,18.08,2024-12-01,NotBillable
+Bill,Norton Lumber and Building Materials,Info Not Available,80.0,2024-12-07,NotBillable
+Bill,Norton Lumber and Building Materials,Info Not Available,125.0,2024-12-07,NotBillable
+Bill,Cal Telephone,Info Not Available,56.5,2024-10-22,NotBillable
+Bill,Robertson & Associates,Info Not Available,315.0,2024-12-07,NotBillable
+Bill,Hall Properties,Info Not Available,900.0,2024-11-21,NotBillable
+Bill,Robertson & Associates,Info Not Available,300.0,2024-08-05,NotBillable
+Bill,Tim Philip Masonry,Info Not Available,666.0,2024-11-22,NotBillable
+Bill,Hicks Hardware,Info Not Available,250.0,2024-10-31,NotBillable
+Bill,PG&E,Info Not Available,86.44,2024-10-23,NotBillable
+Bill,PG&E,Info Not Available,114.09,2024-11-21,NotBillable
+Bill,Cal Telephone,Info Not Available,74.36,2024-11-21,NotBillable
+Bill,Diego's Road Warrior Bodyshop,Info Not Available,755.0,2024-12-05,NotBillable
+Bill,Books by Bessie,Info Not Available,75.0,2024-11-23,NotBillable
+Bill,Brosnahan Insurance Agency,Info Not Available,2000.0,2024-11-30,NotBillable
+Bill,Brosnahan Insurance Agency,Info Not Available,241.23,2024-11-30,NotBillable

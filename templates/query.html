@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Query Results</title>
+    <script src=""https://cdn.tailwindcss.com"></script>
+</head>
+<style type="text/tailwindcss">
+    @layer utilities {
+        .table-base {
+            @apply table-auto w-full border-collapse border border-gray-300;
+        }
+        .table-header {
+            @apply bg-gray-100 border border-gray-300 px-4 py-2 text-left text-gray-700;
+        }
+        .table-row {
+            @apply hover:bg-gray-50;
+        }
+        .table-cell {
+            @apply border border-gray-300 px-4 py-2;
+        }
+        .btn-primary {
+            @apply bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600;
+        }
+    }
+</style>
+<body>
+    <h1>Query Results</h1>
+    {% if billable_lines %}
+        <table class="table-base">
+            <thead>
+                <tr>
+                    <th class="table-header">Expense/Bill</th>
+                    <th class="table-header">Payee/Vendor</th>
+                    <th cclass="table-header">Customer</th>
+                    <th class="table-header">Amount</th>
+                    <th class="table-header">Date</th>
+                    <th class="table-header">Billable Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for line in billable_lines %}
+                <tr>
+                    <td class="table-cell">{{ line['Expense/Bill'] }}</td>
+                    <td class="table-cell">{{ line['Payee/Vendor'] }}</td>
+                    <td class="table-cell">{{ line['Customer'] }}</td>
+                    <td class="table-cell">{{ line['Amount'] }}</td>
+                    <td class="table-cell">{{ line['Date'] }}</td>
+                    <td class="table-cell">{{ line['BillableStatus'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/download">Download as CSV</a>
+    {% else %}
+        <form method="post">
+            <button type="submit">Run Query</button>
+        </form>
+    {% endif %}
+</body>
+</html>

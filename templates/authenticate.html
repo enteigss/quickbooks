@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Authenticate</title>
+    </head>
+    <body>
+        <h1>Authentication Successful! Enter your Query</h1>
+        <form action="/query" method="POST">
+            <textarea name="query" rows="5" cols="40" placeholder="Enter your query here..." required></textarea>
+            <br>
+            <button type="submit" style="margin-top: 20px; padding: 10px 20px;">Submit</button>
+        </form>
+        <a href="/query">Run a Query</a>
+    </body>
+</html>
