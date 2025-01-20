@@ -84,6 +84,7 @@ def query_quickbooks():
         input = request.form.get('query') # User inputted query
         entity = inputToEntity(input)
         # userQuery = QuickBooksQuery()
+        print("Entity:", entity)
 
         query = f"SELECT * FROM {entity}"
         response = requests.get(url, headers=headers, params={"query": query})
@@ -111,6 +112,8 @@ def query_quickbooks():
                     
                     df = pd.concat([df, new_row], ignore_index=True)
 
+            df['DueDate']  = pd.to_datetime(df['DueDate'])
+            df['TxnDate'] = pd.to_datetime(df['TxnDate'])
             queryDataframe(input, df)
 
         else:

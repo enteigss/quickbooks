@@ -32,7 +32,8 @@ def inputToEntity(userInput):
         [
             (
                 "system",
-                "Please output in one word what entity to extract from quickbooks API. Entity Options: Bill, CompanyInfo, Customer, Employee, Estimate, Invoice, Item, Payment, ProfitAndLoss, Vendor",
+                "Please output in one word what entity to extract from quickbooks API. Entity Options: Bill or Purchase. Keep in mind that expense is synonymous with purchase, but only ever output Bill or Purchase", 
+                #CompanyInfo, Customer, Employee, Estimate, Invoice, Item, Payment, ProfitAndLoss, Vendor",
             ),
             ("human", "{input}")
         ]

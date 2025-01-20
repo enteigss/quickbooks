@@ -175,16 +175,27 @@ Its columns are the following:
 
 {columns}
 
+Here is what you need to know about the DataFrame:
+1. Dates are of the format: yyyy-mm-dd
+2. 'TxnDate' refers to the day the transaction took place, or the transaction date. 
+3. 'DueDate' refers to the day the bill is due.
+4. 'BillableStatus' Refers to whether or not the transaction is billable or not. Any transaction is either 'Billable', meaning the transaction can be billed, 'NotBillable', meaning it cannot be billed, or 'HasBeenBilled', meaning it has already been billed. 
+
+Please keep all of these in mind when crafting the code. 
+
 I want you to solve the following problem:
 write a Python code snippet that addresses the following request:
 {request}
 
 While crafting the code, please follow these guidelines:
-1. When comparing or searching for strings, use lower case letters, ignore case sensitivity, and apply a "contains" search.
+1. When comparing or searching for strings, use lower case letters, ignore case sensitivity, and apply a "contains" search or and "eq" search, depending on what is needed. 
 2. Ensure that the answer is a single line of code without explanations, comments, or additional details. 
 3. If a single line solution is not possible, multiline solutions or functions are acceptable, but the code must end with an assignment to the variable 'result'.
 4. Assign the resulting code to the variable 'result'.
 5. Avoid importing any additional libraries than pandas and numpy.
+6. When searching for dates, make sure to keep in mind that the dates are of the format: yyyy-mm-dd (string)
+7. When searching for dates, assume the user is referring to TxnDate unless the due date is explicitly referred to. 
+8. When searching for dates, use datetime methods such as ".year" and ".month". 
 
 """
         if not self.custom_prompt is None and len(self.custom_prompt) > 0:
