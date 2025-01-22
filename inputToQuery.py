@@ -91,6 +91,8 @@ def queryDataframe(userInput, df):
     code = conv_df.code_block
     print(f"Executing the following expression of type {type(result)}:\n{code}\n\nResult is:\n {result}\n")
 
+    return result
+
 
     
 

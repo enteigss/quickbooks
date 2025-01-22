@@ -8,6 +8,7 @@ import os
 from inputToQuery import inputToEntity, queryDataframe
 from queryClass import QuickBooksQuery
 import pandas as pd
+from parseJson import parseJson
 
 app = Flask(__name__)
 
@@ -60,7 +61,7 @@ def callback():
 
 # Make query
 
-@app.route('/query', methods=['GET', 'POST'])
+@app.route('/nl-query', methods=['GET', 'POST'])
 def query_quickbooks():
     try:
 
@@ -82,48 +83,47 @@ def query_quickbooks():
         }
 
         input = request.form.get('query') # User inputted query
-        entity = inputToEntity(input)
-        # userQuery = QuickBooksQuery()
-        print("Entity:", entity)
+        query_entity = inputToEntity(input)
+        print("Entity:", query_entity)
 
-        query = f"SELECT * FROM {entity}"
+        query = f"SELECT * FROM {query_entity}"
         response = requests.get(url, headers=headers, params={"query": query})
-        df = pd.DataFrame(columns=['VendorName', 'Amount', 'DueDate', 'CustomerName', 'BillableStatus', 'TxnDate'])
-
         if response.status_code == 200:
-            data = response.json().get('QueryResponse').get(entity)
-            for entity in data:
-                for line in entity.get('Line', []):
-                    if line == None:
-                        return "Failed to retrieve line"
-                    
-                    details = line.get('AccountBasedExpenseLineDetail', {})
-                    if details == {}:
-                        details = line.get('ItemBasedExpenseLineDetail', {})
-                    if details == {}:
-                        return "Failed to retrieve details"
-                    
-                    new_row = pd.DataFrame({'VendorName': [entity.get('VendorRef').get('name', 'Unknown')],
-                               'Amount': [line.get('Amount')],
-                               'DueDate': [entity.get('DueDate', 'Unknown')],
-                               'CustomerName': [details.get('CustomerRef', {}).get('name', 'Unknown')],
-                               'BillableStatus': [details.get('BillableStatus', 'Unknown')],
-                               'TxnDate': [entity.get('TxnDate', 'Unknown')]})
-                    
-                    df = pd.concat([df, new_row], ignore_index=True)
-
-            df['DueDate']  = pd.to_datetime(df['DueDate'])
-            df['TxnDate'] = pd.to_datetime(df['TxnDate'])
-            queryDataframe(input, df)
-
+            df = parseJson(response, query_entity)
+            df = queryDataframe(input, df)
+            table_html = df.to_html(classes='table table-striped', index=False)
         else:
             return f"Error: {response.status_code}, {response.json()}"
 
+        return render_template('table.html', table=table_html)
+        
+
+    except Exception as e:
+        return f"Error during query: {e}"
+    
+@app.route('/standard-query', methods=['GET', 'POST'])
+def standard_query():
+    try:
+        access_token = auth_client.access_token
+        realm_id = auth_client.realm_id
+
+        if not access_token or not realm_id:
+            return "Error: Missing access token or realm ID. Please authenticate first."
+
+        # Query the database
+        base_url = "https://sandbox-quickbooks.api.intuit.com"
+        endpoint = f"/v3/company/{realm_id}/query"
+        url = base_url + endpoint
+
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        }
 
         purchase_query = "SELECT * FROM Purchase"
         response = requests.get(url, headers=headers, params={"query": purchase_query})
         
-
         if response.status_code == 200:
             purchases = response.json()['QueryResponse'].get('Purchase', [])
             if purchases == None:
@@ -188,19 +188,19 @@ def query_quickbooks():
         else:
             return f"Error: {response.status_Code}, {response.json()}"
 
-        csv_file = 'billable_lines.csv'
+        csv_file = 'transactions.csv'
         with open(csv_file, mode='w', newline='', encoding='utf-8') as file:
             writer = csv.DictWriter(file, fieldnames=['Expense/Bill', 'Payee/Vendor', 'Customer', 'Amount', 'Date', 'BillableStatus'])
             writer.writeheader()
             writer.writerows(billable_lines)
 
-        print(f"Billable lines have been saved to {csv_file}")
+            print(f"Billable lines have been saved to {csv_file}")
 
         return render_template('query.html', csv_file=csv_file, billable_lines=billable_lines)
-        
 
     except Exception as e:
         return f"Error during query: {e}"
+    
     
 @app.route('/download')
 def download():

@@ -180,6 +180,7 @@ Here is what you need to know about the DataFrame:
 2. 'TxnDate' refers to the day the transaction took place, or the transaction date. 
 3. 'DueDate' refers to the day the bill is due.
 4. 'BillableStatus' Refers to whether or not the transaction is billable or not. Any transaction is either 'Billable', meaning the transaction can be billed, 'NotBillable', meaning it cannot be billed, or 'HasBeenBilled', meaning it has already been billed. 
+5. The DataFrame will either contain rows of all purchases, or rows of all bills
 
 Please keep all of these in mind when crafting the code. 
 
