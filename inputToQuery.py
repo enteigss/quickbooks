@@ -1,5 +1,4 @@
 from openai import OpenAI
-import getpass
 import os
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate

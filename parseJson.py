@@ -1,9 +1,5 @@
 import pandas as pd
 
-
-
-
-
 def parseJson(response, query_entity):
     data = response.json().get('QueryResponse').get(query_entity)
     if query_entity == "Bill":
