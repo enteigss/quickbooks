@@ -6,7 +6,6 @@ import requests
 import csv
 import os
 from inputToQuery import inputToEntity, queryDataframe
-from queryClass import QuickBooksQuery
 import pandas as pd
 from parseJson import parseJson
 
@@ -141,7 +140,7 @@ def standard_query():
                     if details == {}:
                         return "Failed to retrieve details"
 
-                    if details.get('BillableStatus') == 'NotBillable':
+                    if details.get('BillableStatus') == 'Billable':
 
                         billable_lines.append({
                             'Expense/Bill': 'Expense',
@@ -174,7 +173,7 @@ def standard_query():
                     if details == {}:
                         return "Failed to retrieve details"
                     
-                    if details.get('BillableStatus') == 'NotBillable':
+                    if details.get('BillableStatus') == 'Billable':
 
                         billable_lines.append({
                             'Expense/Bill': 'Bill',
