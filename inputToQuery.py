@@ -4,12 +4,13 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from pandas_llm import PandasLLM
 import pandas as pd
+from dotenv import load_dotenv
 
 #if not os.environ.get("OPENAI_API_KEY"):
 #    os.environ["OPENAI_API_KEY"] = getpass.getpass("Enter your OpenAI API key: ")
 
-OPENAI_API_KEY = "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"
-
+load_dotenv()
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 
 def inputToEntity(userInput):
@@ -24,7 +25,7 @@ def inputToEntity(userInput):
     max_tokens=None,
     timeout=None,
     max_retries=2,
-    api_key="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"
+    api_key=OPENAI_API_KEY
 )
 
     prompt = ChatPromptTemplate.from_messages(
@@ -58,7 +59,7 @@ def inputToColumns(userInput):
     max_tokens=None,
     timeout=None,
     max_retries=2,
-    api_key="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"
+    api_key=OPENAI_API_KEY
 )
 
     prompt = ChatPromptTemplate.from_messages(

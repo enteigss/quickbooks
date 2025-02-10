@@ -18,6 +18,8 @@ Install langchain_openai: pip install langchain_openai
 
 Install langchain_core: pip install langchain_core
 
+Install RestrictedPython: pip install RestrictedPython
+
 Run application in command line: python quickbooks.py
 
 

@@ -8,13 +8,16 @@ import os
 from inputToQuery import inputToEntity, queryDataframe
 import pandas as pd
 from parseJson import parseJson
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 
-CLIENT_ID = "ABIFJybZdhXhKmeErhbfWoQGoCiGBTAY2OcT8DZ0KkprJM8K76"
-CLIENT_SECRET = "DIIIxBvtYLaVbZNt6RAbjtf0t8kjP6OywwL4ffXw"
+load_dotenv()
+
 REDIRECT_URI = "http://localhost:8000/callback"
 ENVIRONMENT = "sandbox"
+CLIENT_ID = os.getenv("CLIENT_ID")
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
 auth_client = AuthClient(
     client_id=CLIENT_ID,
