@@ -14,6 +14,7 @@ app = Flask(__name__)
 
 load_dotenv()
 
+# REDIRECT_URI = "http://localhost:8000/callback"
 REDIRECT_URI = "https://enigmatic-falls-03075-43083390e422.herokuapp.com/callback"
 ENVIRONMENT = "sandbox"
 CLIENT_ID = os.getenv("CLIENT_ID")
@@ -86,7 +87,6 @@ def query_quickbooks():
 
         input = request.form.get('query') # User inputted query
         query_entity = inputToEntity(input)
-        print("Entity:", query_entity)
 
         query = f"SELECT * FROM {query_entity}"
         response = requests.get(url, headers=headers, params={"query": query})
