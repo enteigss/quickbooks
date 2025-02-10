@@ -14,7 +14,7 @@ app = Flask(__name__)
 
 load_dotenv()
 
-REDIRECT_URI = "http://localhost:8000/callback"
+REDIRECT_URI = "https://enigmatic-falls-03075-43083390e422.herokuapp.com/callback"
 ENVIRONMENT = "sandbox"
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
