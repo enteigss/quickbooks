@@ -22,7 +22,6 @@ CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
 def get_auth_client():
     access_token = os.getenv("ACCESS_TOKEN")
-    refresh_token = os.getenv("REFRESH_TOKEN")
     realm_id = os.getenv("REALM_ID")
 
     auth_client = AuthClient(
@@ -31,8 +30,7 @@ def get_auth_client():
         redirect_uri=REDIRECT_URI,
         environment=ENVIRONMENT,
         access_token=access_token,
-        realm_id=realm_id,
-        refresh_token=refresh_token
+        realm_id=realm_id
     )
 
     #if auth_client.is_access_token_expired():
@@ -78,8 +76,9 @@ def callback():
             return "Error: Missing auth_code or realm ID"
 
         auth_client.get_bearer_token(auth_code, realm_id=realm_id)
-        os.system(f"heroku config:set ACCESS_TOKEN={auth_client.access_token}")
-        os.system(f"heroku config:set REALM_ID={realm_id}")
+        print("LOG: access token:", auth_client.access_token)
+        os.environ["ACCESS_TOKEN"] = auth_client.access_token
+        os.environ["REALM_ID"] = realm_id
 
 
         return render_template('authenticate.html')
