@@ -71,10 +71,11 @@ def query_quickbooks():
         access_token = auth_client.access_token
         realm_id = auth_client.realm_id
 
-        if not access_token:
-            return "Error: Missing access token."
         if not realm_id:
             return "Error: Missing realm ID."
+        if not access_token:
+            return "Error: Missing access token."
+        
 
         # if not access_token or not realm_id:
         #    return "Error: Missing access token or realm ID. Please authenticate first."
