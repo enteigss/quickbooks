@@ -60,6 +60,8 @@ def callback():
             return "Error: Missing auth_code or realm ID"
 
         auth_client.get_bearer_token(auth_code, realm_id=realm_id)
+        os.system(f"heroku config:set ACCESS_TOKEN={auth_client.access_token}")
+        os.system(f"heroku config:set REALM_ID={realm_id}")
         print("LOG: Got bearer token")
 
 
@@ -79,6 +81,8 @@ def query_quickbooks():
         realm_id = auth_client.realm_id
         print("LOG: access_token:", access_token)
         print("LOG: realm_id:", realm_id)
+        print("LOG: env access_token:", os.getenv("ACCESS_TOKEN"))
+        print("LOG: env realm_id:", os.getenv("REALM_ID"))
 
         if not realm_id or access_token:
             return "Error: Missing realm ID or access token."
