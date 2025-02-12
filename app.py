@@ -67,6 +67,7 @@ def callback():
 @app.route('/nl-query', methods=['GET', 'POST'])
 def query_quickbooks():
     try:
+        print("Entering nl-query")
 
         access_token = auth_client.access_token
         realm_id = auth_client.realm_id
