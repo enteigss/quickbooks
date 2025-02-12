@@ -44,17 +44,21 @@ def authenticate():
 def callback():
     # Handle callback and exchange code for tokens
     try: 
+        print("LOG: Entering callback")
         
         # parameters specifying what data app will have access to
         ####
         auth_code = request.args.get('code')
         realm_id = request.args.get('realmId')
         ####
+        print("LOG: Auth_code in callback:", auth_code)
+        print("LOG: realm_id in callback:", realm_id)
 
         if not auth_code or not realm_id:
             return "Error: Missing auth_code or realm ID"
 
         auth_client.get_bearer_token(auth_code, realm_id=realm_id)
+        print("LOG: Got bearer token")
 
 
         return render_template('authenticate.html')
@@ -67,15 +71,15 @@ def callback():
 @app.route('/nl-query', methods=['GET', 'POST'])
 def query_quickbooks():
     try:
-        print("Entering nl-query")
+        print("LOG: Entering nl-query")
 
         access_token = auth_client.access_token
         realm_id = auth_client.realm_id
+        print("LOG: access_token:", access_token)
+        print("LOG: realm_id:", realm_id)
 
-        if not realm_id:
-            return "Error: Missing realm ID."
-        if not access_token:
-            return "Error: Missing access token."
+        if not realm_id or access_token:
+            return "Error: Missing realm ID or access token."
         
 
         # if not access_token or not realm_id:
