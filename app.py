@@ -20,12 +20,34 @@ ENVIRONMENT = "sandbox"
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
-auth_client = AuthClient(
-    client_id=CLIENT_ID,
-    client_secret=CLIENT_SECRET,
-    redirect_uri=REDIRECT_URI,
-    environment=ENVIRONMENT,
-)
+def get_auth_client():
+    access_token = os.getenv("ACCESS_TOKEN")
+    refresh_token = os.getenv("REFRESH_TOKEN")
+    realm_id = os.getenv("REALM_ID")
+
+    auth_client = AuthClient(
+        client_id=CLIENT_ID,
+        client_secret=CLIENT_SECRET,
+        redirect_uri=REDIRECT_URI,
+        environment=ENVIRONMENT,
+        access_token=access_token,
+        realm_id=realm_id,
+        refresh_token=refresh_token
+    )
+
+    if auth_client.is_access_token_expired():
+        new_token = auth_client.refresh()
+        os.system(f"heroku config:set ACCESS_TOKEN={new_token['access_token']}")
+        os.system(f"heroku config:set REFRESH_TOKEN={new_token['refresh_token']}")
+
+    return auth_client
+
+# auth_client = AuthClient(
+#     client_id=CLIENT_ID,
+#    client_secret=CLIENT_SECRET,
+#    redirect_uri=REDIRECT_URI,
+#    environment=ENVIRONMENT,
+# )
 
 @app.route('/')
 def index():
@@ -34,6 +56,7 @@ def index():
 @app.route('/authenticate')
 def authenticate():
     # Redirect to Intuit authorization URL
+    auth_client = get_auth_client()
     authorization_url = auth_client.get_authorization_url([
         Scopes.ACCOUNTING # Specify the scope of the app
     ])
@@ -44,7 +67,7 @@ def authenticate():
 def callback():
     # Handle callback and exchange code for tokens
     try:
-        
+        auth_client = get_auth_client()
         # parameters specifying what data app will have access to
         ####
         auth_code = request.args.get('code')
@@ -57,7 +80,6 @@ def callback():
         auth_client.get_bearer_token(auth_code, realm_id=realm_id)
         os.system(f"heroku config:set ACCESS_TOKEN={auth_client.access_token}")
         os.system(f"heroku config:set REALM_ID={realm_id}")
-        print("LOG: access_token:", auth_client.access_token if auth_client.access_token else "Not found")
 
 
         return render_template('authenticate.html')
@@ -70,6 +92,7 @@ def callback():
 @app.route('/nl-query', methods=['GET', 'POST'])
 def query_quickbooks():
     try:
+        auth_client = get_auth_client()
         if not auth_client:
             print("Auth client not found")
 
@@ -119,6 +142,7 @@ def query_quickbooks():
 @app.route('/standard-query', methods=['GET', 'POST'])
 def standard_query():
     try:
+        auth_client = get_auth_client()
         access_token = auth_client.access_token
         realm_id = auth_client.realm_id
 
