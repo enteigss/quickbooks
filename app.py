@@ -45,8 +45,6 @@ def callback():
     # Handle callback and exchange code for tokens
     try: 
         print("LOG: Entering callback")
-        print("LOG: CLIENT_ID:", CLIENT_ID if CLIENT_ID else "Not found")
-        print("LOG: CLIENT_ID:", CLIENT_SECRET if CLIENT_SECRET else "Not found")
         
         # parameters specifying what data app will have access to
         ####
@@ -55,6 +53,8 @@ def callback():
         ####
         print("LOG: Auth_code in callback:", auth_code)
         print("LOG: realm_id in callback:", realm_id)
+        print("LOG: CLIENT_ID:", CLIENT_ID if CLIENT_ID else "Not found")
+        print("LOG: CLIENT_ID:", CLIENT_SECRET if CLIENT_SECRET else "Not found")
 
         if not auth_code or not realm_id:
             return "Error: Missing auth_code or realm ID"
