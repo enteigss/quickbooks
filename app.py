@@ -102,7 +102,7 @@ def query_quickbooks():
         print("LOG: env access_token:", os.getenv("ACCESS_TOKEN"))
         print("LOG: env realm_id:", os.getenv("REALM_ID"))
 
-        if not realm_id or access_token:
+        if not realm_id or not access_token:
             return "Error: Missing realm ID or access token."
         
 
