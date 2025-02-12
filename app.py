@@ -20,9 +20,6 @@ ENVIRONMENT = "sandbox"
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
-print("LOG: CLIENT_ID:", CLIENT_ID if CLIENT_ID else "Not found")
-print("LOG: CLIENT_ID:", CLIENT_SECRET if CLIENT_SECRET else "Not found")
-
 auth_client = AuthClient(
     client_id=CLIENT_ID,
     client_secret=CLIENT_SECRET,
@@ -48,6 +45,8 @@ def callback():
     # Handle callback and exchange code for tokens
     try: 
         print("LOG: Entering callback")
+        print("LOG: CLIENT_ID:", CLIENT_ID if CLIENT_ID else "Not found")
+        print("LOG: CLIENT_ID:", CLIENT_SECRET if CLIENT_SECRET else "Not found")
         
         # parameters specifying what data app will have access to
         ####
