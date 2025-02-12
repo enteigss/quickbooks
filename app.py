@@ -35,10 +35,10 @@ def get_auth_client():
         refresh_token=refresh_token
     )
 
-    if auth_client.is_access_token_expired():
-        new_token = auth_client.refresh()
-        os.system(f"heroku config:set ACCESS_TOKEN={new_token['access_token']}")
-        os.system(f"heroku config:set REFRESH_TOKEN={new_token['refresh_token']}")
+    #if auth_client.is_access_token_expired():
+    #    new_token = auth_client.refresh()
+    #    os.system(f"heroku config:set ACCESS_TOKEN={new_token['access_token']}")
+    #    os.system(f"heroku config:set REFRESH_TOKEN={new_token['refresh_token']}")
 
     return auth_client
 
