@@ -23,6 +23,7 @@ CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 def get_auth_client():
     access_token = os.getenv("ACCESS_TOKEN")
     realm_id = os.getenv("REALM_ID")
+    # refresh_token = os.getenv("REFRESH_TOKEN")
 
     auth_client = AuthClient(
         client_id=CLIENT_ID,
@@ -33,19 +34,7 @@ def get_auth_client():
         realm_id=realm_id
     )
 
-    #if auth_client.is_access_token_expired():
-    #    new_token = auth_client.refresh()
-    #    os.system(f"heroku config:set ACCESS_TOKEN={new_token['access_token']}")
-    #    os.system(f"heroku config:set REFRESH_TOKEN={new_token['refresh_token']}")
-
     return auth_client
-
-# auth_client = AuthClient(
-#     client_id=CLIENT_ID,
-#    client_secret=CLIENT_SECRET,
-#    redirect_uri=REDIRECT_URI,
-#    environment=ENVIRONMENT,
-# )
 
 @app.route('/')
 def index():
@@ -76,7 +65,6 @@ def callback():
             return "Error: Missing auth_code or realm ID"
 
         auth_client.get_bearer_token(auth_code, realm_id=realm_id)
-        print("LOG: access token:", auth_client.access_token)
         os.environ["ACCESS_TOKEN"] = auth_client.access_token
         os.environ["REALM_ID"] = realm_id
 
@@ -97,17 +85,11 @@ def query_quickbooks():
 
         access_token = auth_client.access_token
         realm_id = auth_client.realm_id
-        print("LOG: access_token:", access_token)
-        print("LOG: realm_id:", realm_id)
-        print("LOG: env access_token:", os.getenv("ACCESS_TOKEN"))
-        print("LOG: env realm_id:", os.getenv("REALM_ID"))
+        # print("LOG: access_token:", access_token)
+        # print("LOG: realm_id:", realm_id)
 
         if not realm_id or not access_token:
             return "Error: Missing realm ID or access token."
-        
-
-        # if not access_token or not realm_id:
-        #    return "Error: Missing access token or realm ID. Please authenticate first."
 
         # Query the database
         base_url = "https://sandbox-quickbooks.api.intuit.com"
