@@ -23,30 +23,70 @@ If you have a QuickBooks account you can connect and the app will be able to acc
 ## Installation
 
 If you want to run this application locally you will need to make an intuit developer account 
-to get access to the API. 
+to get access to the API. You will also need to make an OPENAI developer account to get access
+to their API. 
 
-Clone repo: git clone https://github.com/enteigss/quickbooks.git
+1. Clone the repository
 
 ``` sh
 git clone https://github.com/enteigss/quickbooks.git
 cd quickbooks-app
 ```
+2. 
 
 - Install Intuit's OAuth2 Client: pip install intuit-oauth
 
+```sh
+pip install intuit-oauth
+```
+
 - Install Flask: pip install flask
+
+```sh
+pip install flask
+```
 
 - Install pandas: pip install pandas
 
+```sh
+pip install pandas
+```
+
 - Install OpenAI API: pip install openai
+
+```sh
+pip install openai
+```
 
 - Install langchain_openai: pip install langchain_openai
 
+```sh
+pip install langchain_openai
+```
+
 - Install langchain_core: pip install langchain_core
+
+```sh
+pip install langchain_core
+```
 
 - Install RestrictedPython: pip install RestrictedPython
 
-- Run application in command line: python quickbooks.py
+```sh
+pip install RestrictedPython
+```
+
+3. Set up environment variables
+
+- Create a .env file in the project root and add:
+
+``` ini
+CLIENT_ID=your_client_id
+CLIENT_SECRET=your_client_secret
+OPENAI_API_KEY=your_openai_api_key
+```
+
+- Replace placeholders with your actual credentials
 
 ## Local Usage
 
