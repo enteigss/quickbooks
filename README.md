@@ -36,55 +36,55 @@ cd quickbooks-app
 
     - Install Intuit's OAuth2 Client
 
-```sh
-pip install intuit-oauth
-```
+    ```sh
+    pip install intuit-oauth
+    ```
 
     - Install Flask
 
-```sh
-pip install flask
-```
+    ```sh
+    pip install flask
+    ```
 
     - Install pandas
 
-```sh
-pip install pandas
-```
+    ```sh
+    pip install pandas
+    ```
 
     - Install OpenAI API
 
-```sh
-pip install openai
-```
+    ```sh
+    pip install openai
+    ```
 
     - Install langchain_openai
 
-```sh
-pip install langchain_openai
-```
+    ```sh
+    pip install langchain_openai
+    ```
 
     - Install langchain_core
 
-```sh
-pip install langchain_core
-```
+    ```sh
+    pip install langchain_core
+    ```
 
     - Install RestrictedPython
 
-```sh
-pip install RestrictedPython
-```
+    ```sh
+    pip install RestrictedPython
+    ```
 
 3. Set up environment variables
 
     - Create a .env file in the project root and add:
 
-``` ini
-CLIENT_ID=your_client_id
-CLIENT_SECRET=your_client_secret
-OPENAI_API_KEY=your_openai_api_key
-```
+    ``` ini
+    CLIENT_ID=your_client_id
+    CLIENT_SECRET=your_client_secret
+    OPENAI_API_KEY=your_openai_api_key
+    ```
 
     - Replace placeholders with your actual credentials
 
