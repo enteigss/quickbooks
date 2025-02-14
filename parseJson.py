@@ -1,7 +1,7 @@
 import pandas as pd
 
-def parseJson(response, query_entity):
-    data = response.json().get('QueryResponse').get(query_entity)
+def parseJson(json, query_entity):
+    data = json.get('QueryResponse').get(query_entity)
     if query_entity == "Bill":
         df = pd.DataFrame(columns=['EntityType','VendorName', 'Amount', 'DueDate', 'CustomerName', 'BillableStatus', 'TxnDate'])
     if query_entity == "Purchase":

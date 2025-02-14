@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Demo Mode</title>
+    </head>
+    <body>
+        <h1>Welcome to Demo Mode! Enter your Query</h1>
+        <form action="/nl-query?demo=true" method="POST">
+            <textarea name="query" rows="5" cols="40" placeholder="Enter your query here..." required></textarea>
+            <br>
+            <button type="submit" style="margin-top: 20px; padding: 10px 20px;">Submit</button>
+        </form>
+        <a href="/standard-query">See Billable Transactions</a>
+    </body>
+</html>

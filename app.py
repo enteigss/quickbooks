@@ -9,6 +9,7 @@ from inputToQuery import inputToEntity, queryDataframe
 import pandas as pd
 from parseJson import parseJson
 from dotenv import load_dotenv
+import json
 
 app = Flask(__name__)
 
@@ -79,14 +80,42 @@ def callback():
 @app.route('/nl-query', methods=['GET', 'POST'])
 def query_quickbooks():
     try:
+        
+        # Receive input and extract entity
+        input = request.form.get('query') # User inputted query
+        query_entity = inputToEntity(input)
+
+        # If demo mode on use pre-saved jsons
+        if request.args.get("demo") == "true":
+
+            json_file = ""
+            if query_entity == "Bill":
+                json_file = "bills.json"
+            elif query_entity == "Purchase":
+                json_file = "expenses.json"
+            else: 
+                return "Error: Failed to extract entity"
+            
+            file_path = os.path.join(os.getcwd(), "sandboxJsons", json_file)
+            if not os.path.exists(file_path):
+                return f"Error: File {file_path} not found."
+            
+            with open(file_path, "r") as file:
+                data = json.load(file)
+
+            df = parseJson(data, query_entity)
+            df = queryDataframe(input, df)
+            df.to_csv('query_results.csv', index=False)
+            table_html = df.to_html(classes='table table-striped', index=False)
+
+            return render_template('table.html', table=table_html)
+        # Else continue with auth client
         auth_client = get_auth_client()
         if not auth_client:
             print("Auth client not found")
 
         access_token = auth_client.access_token
         realm_id = auth_client.realm_id
-        # print("LOG: access_token:", access_token)
-        # print("LOG: realm_id:", realm_id)
 
         if not realm_id or not access_token:
             return "Error: Missing realm ID or access token."
@@ -102,14 +131,13 @@ def query_quickbooks():
             "Content-Type": "application/json",
         }
 
-        input = request.form.get('query') # User inputted query
-        query_entity = inputToEntity(input)
-
         query = f"SELECT * FROM {query_entity}"
         response = requests.get(url, headers=headers, params={"query": query})
         if response.status_code == 200:
-            df = parseJson(response, query_entity)
+            json_data = response.json()
+            df = parseJson(json_data, query_entity)
             df = queryDataframe(input, df)
+            df.to_csv('query_results.csv', index=False)
             table_html = df.to_html(classes='table table-striped', index=False)
         else:
             return f"Error: {response.status_code}, {response.json()}"
@@ -229,6 +257,27 @@ def download():
         return send_file(csv_file, as_attachment=True)
     else:
         return "No CSV file found. Run a query first."
+    
+@app.route('/download-nl')
+def downloadNl():
+    type = request.args.get('type', 'query')
+    folder_path = 'transactions'
+    if type == 'query':
+        csv_file = 'query_results.csv'
+    elif type == 'expenses':
+        csv_file = os.path.join(folder_path, 'expenses.xls')
+    elif type == 'bills':
+        csv_file = os.path.join(folder_path, 'bills.xls')
+    else:
+        return "Error: invalid table"
+    if os.path.exists(csv_file):
+        return send_file(csv_file, as_attachment=True)
+    else:
+        return "No CSV file found."
+    
+@app.route('/demo')
+def demo():
+    return render_template('demo.html')
 
 if __name__ == "__main__":
     app.run(port=8000)

@@ -1,0 +1,17 @@
+EntityType,VendorName,Amount,DueDate,CustomerName,BillableStatus,TxnDate
+Bill,Norton Lumber and Building Materials,80.0,2024-12-07,Unknown,NotBillable,2024-12-07
+Bill,Norton Lumber and Building Materials,125.0,2024-12-07,Unknown,NotBillable,2024-12-07
+Bill,Norton Lumber and Building Materials,103.55,2025-01-03,Travis Waldron,HasBeenBilled,2024-12-04
+Bill,Cal Telephone,56.5,2024-10-22,Unknown,NotBillable,2024-10-22
+Bill,Robertson & Associates,315.0,2024-12-07,Unknown,NotBillable,2024-12-07
+Bill,Hall Properties,900.0,2024-12-21,Unknown,NotBillable,2024-11-21
+Bill,Robertson & Associates,300.0,2024-09-04,Unknown,NotBillable,2024-08-05
+Bill,Tim Philip Masonry,666.0,2024-11-22,Unknown,NotBillable,2024-11-22
+Bill,Hicks Hardware,250.0,2024-10-31,Unknown,NotBillable,2024-10-31
+Bill,PG&E,86.44,2024-11-22,Unknown,NotBillable,2024-10-23
+Bill,PG&E,114.09,2024-12-21,Unknown,NotBillable,2024-11-21
+Bill,Cal Telephone,74.36,2024-12-21,Unknown,NotBillable,2024-11-21
+Bill,Diego's Road Warrior Bodyshop,755.0,2025-01-04,Unknown,NotBillable,2024-12-05
+Bill,Books by Bessie,75.0,2024-12-08,Unknown,NotBillable,2024-11-23
+Bill,Brosnahan Insurance Agency,2000.0,2024-11-30,Unknown,NotBillable,2024-11-30
+Bill,Brosnahan Insurance Agency,241.23,2024-12-10,Unknown,NotBillable,2024-11-30
