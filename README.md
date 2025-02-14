@@ -32,45 +32,45 @@ to their API.
 git clone https://github.com/enteigss/quickbooks.git
 cd quickbooks-app
 ```
-2. 
+2. Install dependencies
 
-- Install Intuit's OAuth2 Client: pip install intuit-oauth
+    - Install Intuit's OAuth2 Client
 
 ```sh
 pip install intuit-oauth
 ```
 
-- Install Flask: pip install flask
+    - Install Flask
 
 ```sh
 pip install flask
 ```
 
-- Install pandas: pip install pandas
+    - Install pandas
 
 ```sh
 pip install pandas
 ```
 
-- Install OpenAI API: pip install openai
+    - Install OpenAI API
 
 ```sh
 pip install openai
 ```
 
-- Install langchain_openai: pip install langchain_openai
+    - Install langchain_openai
 
 ```sh
 pip install langchain_openai
 ```
 
-- Install langchain_core: pip install langchain_core
+    - Install langchain_core
 
 ```sh
 pip install langchain_core
 ```
 
-- Install RestrictedPython: pip install RestrictedPython
+    - Install RestrictedPython
 
 ```sh
 pip install RestrictedPython
@@ -78,7 +78,7 @@ pip install RestrictedPython
 
 3. Set up environment variables
 
-- Create a .env file in the project root and add:
+    - Create a .env file in the project root and add:
 
 ``` ini
 CLIENT_ID=your_client_id
@@ -86,7 +86,7 @@ CLIENT_SECRET=your_client_secret
 OPENAI_API_KEY=your_openai_api_key
 ```
 
-- Replace placeholders with your actual credentials
+    - Replace placeholders with your actual credentials
 
 ## Local Usage
 
