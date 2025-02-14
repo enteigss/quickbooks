@@ -56,15 +56,15 @@ cd quickbooks-app
 
 ## Technologies Used
 
-Flask (Backend framework)
+- Flask (Backend framework)
 
-QuickBooks API 
+- QuickBooks API 
 
-OAuth2 (Authentication)
+- OAuth2 (Authentication)
 
-Pandas (Data processing)
+- Pandas (Data processing)
 
-HTML/CSS (Frontend templates)
+- HTML/CSS (Frontend templates)
 
 ## Contributing
 
