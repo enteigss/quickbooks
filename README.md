@@ -22,6 +22,9 @@ If you have a QuickBooks account you can connect and the app will be able to acc
 
 ## Installation
 
+If you want to run this application locally you will need to make an intuit developer account 
+to get access to the API. 
+
 Clone repo: git clone https://github.com/enteigss/quickbooks.git
 
 ``` sh
@@ -45,13 +48,18 @@ cd quickbooks-app
 
 - Run application in command line: python quickbooks.py
 
-## Usage
+## Local Usage
 
 1. Run the Application
 
 2. Authenticate with Quickbooks or use Demo Mode
 
 3. Write and submit a query
+
+## Website
+
+It is recommended that you use the app on the website: https://enigmatic-falls-03075-43083390e422.herokuapp.com/
+Instead of running it locally. 
 
 
 ## Technologies Used
