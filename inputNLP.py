@@ -2,7 +2,7 @@ from openai import OpenAI
 import os
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
-from pandas_llm import PandasLLM
+from processors.pandas_llm import PandasLLM
 import pandas as pd
 from dotenv import load_dotenv
 
@@ -81,17 +81,7 @@ def inputToColumns(userInput):
 
     return msg.content
 
-def queryDataframe(userInput, df):
-    """
-    userInput - Text input from user (string)
-    """
 
-    conv_df = PandasLLM(data=df, llm_api_key=os.environ.get("OPENAI_API_KEY"))
-    result = conv_df.prompt(userInput)
-    code = conv_df.code_block
-    print(f"Executing the following expression of type {type(result)}:\n{code}\n\nResult is:\n {result}\n")
-
-    return result
 
 
     

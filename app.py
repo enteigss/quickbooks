@@ -5,21 +5,24 @@ from flask import Flask, request, redirect, render_template, send_file, url_for
 import requests
 import csv
 import os
-from inputToQuery import inputToEntity, queryDataframe
+from inputNLP import inputToEntity
 import pandas as pd
 from parseJson import parseJson
 from dotenv import load_dotenv
 import json
+from processors.jsonProcessor import AIJsonProcessor
+from processors.pandas_llm import PandasLLM
 
 app = Flask(__name__)
 
 load_dotenv()
 
-# REDIRECT_URI = "http://localhost:8000/callback"
-REDIRECT_URI = "https://enigmatic-falls-03075-43083390e422.herokuapp.com/callback"
+REDIRECT_URI = "http://localhost:8000/callback"
+# REDIRECT_URI = "https://enigmatic-falls-03075-43083390e422.herokuapp.com/callback"
 ENVIRONMENT = "sandbox"
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 def get_auth_client():
     access_token = os.getenv("ACCESS_TOKEN")
@@ -103,12 +106,20 @@ def query_quickbooks():
             with open(file_path, "r") as file:
                 data = json.load(file)
 
-            df = parseJson(data, query_entity)
-            df = queryDataframe(input, df)
-            df.to_csv('query_results.csv', index=False)
-            table_html = df.to_html(classes='table table-striped', index=False)
+            if isinstance(df_pandas, str):
+                results['pandas_error'] = df_pandas
+            else:
+                conv_df = PandasLLM(data=df_pandas, llm_api_key=OPENAI_API_KEY)
+                result_df_pandas = conv_df.prompt(input)
+                if isinstance(result_df_pandas, pd.DataFrame):
+                    result_df_pandas.to_csv('query_results_pandas.csv', index=False)
+                    table_html = result_df_pandas.to_html(classes='table table-striped', index=False)
+                else:
+                    results['pandas_error'] = "Failed to process query with PandasLLM"
+            
 
             return render_template('table.html', table=table_html)
+        
         # Else continue with auth client
         auth_client = get_auth_client()
         if not auth_client:
@@ -131,18 +142,78 @@ def query_quickbooks():
             "Content-Type": "application/json",
         }
 
+        # Query QuickBooks
         query = f"SELECT * FROM {query_entity}"
         response = requests.get(url, headers=headers, params={"query": query})
+
+        if response.status_code != 200:
+            return f"Error: {response.status_code}, {response.json()}"
+        
+        json_data = response.json()
+
+        results = {}
+
+        try:
+            df_pandas = parseJson(json_data, query_entity)
+            if isinstance(df_pandas, str):
+                results['pandas_error'] = df_pandas
+            else:
+                conv_df = PandasLLM(data=df_pandas, llm_api_key=OPENAI_API_KEY)
+                result_df_pandas = conv_df.prompt(input)
+                if isinstance(result_df_pandas, pd.DataFrame):
+                    result_df_pandas.to_csv('query_results_pandas.csv', index=False)
+                    results['pandas_html'] = result_df_pandas.to_html(
+                        classes='table table-striped',
+                        index=False
+                    )
+                else:
+                    results['pandas_error'] = "Failed to process query with PandasLLM"
+        except Exception as e:
+            results['pandas_error'] = f"Error in PandasLLM processing: {str(e)}"
+
+        try:
+            processor = AIJsonProcessor(api_key=OPENAI_API_KEY)
+            json_result = processor.process_json(json_data, input)
+            if isinstance(json_result, pd.DataFrame):
+                json_result.to_csv('query_results_json.csv', index=False)
+                results['json_html'] = json_result.to_html(
+                    classes='table table-striped',
+                    index=False
+                )
+            else:
+                results['json_error'] = "Failed to process JSON directly"
+        except Exception  as e:
+            results['json_error'] = f"Error in JSON processing: {str(e)}"
+
+        if 'pandas_html' in results or 'json_html' in results:
+            return render_template(
+                'dual_table.html',
+                pandas_table=results.get('pandas_html', ''),
+                json_table=results.get('json_html', ''),
+                pandas_error=results.get('pandas_error', ''),
+                json_error=results.get('json_error')
+            )
+        else:
+            return "Error: Both processing approaches failed"
+
+        # Query json with user input
+        processor = AIJsonProcessor(api_key=OPENAI_API_KEY)
+        json_df = processor.process_json(response.json(), input)
+        table_html_1 = df.html(classes='table table-striped', index=False)
+        print(json_df)
+
         if response.status_code == 200:
+            # Convert json to dataframe and query with user input
             json_data = response.json()
-            df = parseJson(json_data, query_entity)
-            df = queryDataframe(input, df)
+            parsed_df = parseJson(json_data, query_entity)
+            conv_df = PandasLLM(data=parsed_df, llm_api_key=os.environ.get("OPENAI_API_KEY"))
+            df = conv_df.prompt(input)
             df.to_csv('query_results.csv', index=False)
             table_html = df.to_html(classes='table table-striped', index=False)
         else:
             return f"Error: {response.status_code}, {response.json()}"
 
-        return render_template('table.html', table=table_html)
+        return render_template('table.html', table=table_html, table1=table_html_1)
         
 
     except Exception as e:
